@@ -8,7 +8,7 @@ description: |
 platforms:
   amd64:
   arm64:
-  s390x:
+  # s390x:
 
 environment:
   APP_UID: 584792

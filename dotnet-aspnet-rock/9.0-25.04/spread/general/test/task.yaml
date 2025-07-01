@@ -1,15 +1,16 @@
 summary: test the 'my-rock-name' project
 
 execute: |
-  sudo apt update
-  sudo apt install dotnet-sdk-9.0 -y
+  # sudo apt update
+  # sudo apt install dotnet-sdk-9.0 -y
   cd web_helloworld/src
-  dotnet publish --no-self-contained -r linux-x64
+  # dotnet publish --no-self-contained -r linux-x64
+  docker run --rm -v $(pwd):/app ubuntu:25.04 bash -c 'apt update && apt install dotnet-sdk-9.0 -y && cd /app && dotnet publish --no-self-contained -r linux-x64'
 
   docker run -d -p 8000:8080 --name web_helloworld -v $(pwd):/app:ro my-rock-name /app/bin/Release/net9.0/linux-x64/Hello.dll
 
   # Allow time for web app to start
-  sleep 5
+  sleep 10
 
   # Send a request to the web app and verify the result
   ret=0

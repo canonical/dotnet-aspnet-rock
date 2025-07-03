@@ -12,7 +12,7 @@ execute: |
   # dotnet publish --no-self-contained -r linux-x64
   docker run --rm -v $(pwd):/app public.ecr.aws/ubuntu/ubuntu:25.04 bash -c "apt update && apt install dotnet-sdk-9.0 -y && cd /app && dotnet publish --no-self-contained -r $rid"
 
-  docker run -d -p 8000:8080 --name web_helloworld -v $(pwd):/app:ro my-rock-name exec /usr/bin/dotnet /app/bin/Release/net9.0/linux-x64/Hello.dll
+  docker run -d -p 8000:8080 --name web_helloworld -v $(pwd):/app:ro my-rock-name exec /usr/bin/dotnet "/app/bin/Release/net9.0/$rid/Hello.dll"
 
   # Allow time for web app to start
   sleep 10

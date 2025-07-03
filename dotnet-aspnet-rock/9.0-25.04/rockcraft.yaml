@@ -18,8 +18,6 @@ environment:
 
 run-user: _daemon_
 
-entrypoint-service: dotnet-runtime
-
 services:
   dotnet-runtime:
     override: replace
@@ -29,7 +27,7 @@ services:
     on-failure: shutdown
 
 parts:
-  deps:
+  asptnet:
     plugin: nil
     override-build: |
       chisel cut --release ubuntu-25.04 \
@@ -41,5 +39,4 @@ parts:
         aspnetcore-runtime-9.0_libs
       mv ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet9 ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet \
       && ln -s ../lib/dotnet/dotnet ${CRAFT_PART_INSTALL}/usr/bin/dotnet
-
 

@@ -32,7 +32,7 @@ jobs:
     uses: canonical/oci-factory/.github/workflows/Build-Rock.yaml@main
     with:
       rock-repo: ${{ github.repository }}
-      rock-repo-commit: ${{ github.ref }}
+      rock-repo-commit: ${{ github.ref_name }}
       rockfile-directory: ${{ matrix.rock.location }}
       oci-archive-name: ${{ matrix.rock.name }}_${{ matrix.rock.tag }}
       arch-map: ${{ needs.get-runners.outputs.arch-map }}

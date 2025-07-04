@@ -2,7 +2,7 @@ name: dotnet-aspnet
 build-base: ubuntu@24.04
 base: bare
 version: '9.0'
-summary: The .NET runtime
+summary: ASP .NET 9 rock.
 description: |
   Chiselled Ubuntu runtime image for ASP.NET apps.
 platforms:
@@ -19,7 +19,7 @@ environment:
 run-user: _daemon_
 
 services:
-  dotnet-runtime:
+  aspnet:
     override: replace
     startup: enabled
     command: "/usr/bin/dotnet [ --info ]"
@@ -27,7 +27,7 @@ services:
     on-failure: shutdown
 
 parts:
-  asptnet:
+  aspnet:
     plugin: nil
     override-build: |
       chisel cut --release ubuntu-25.04 \

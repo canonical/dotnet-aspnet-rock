@@ -1,4 +1,4 @@
-summary: test the 'my-rock-name' project
+summary: test the 'dotnet-aspnet-rock' project
 
 execute: |
   case "$(uname -m)" in

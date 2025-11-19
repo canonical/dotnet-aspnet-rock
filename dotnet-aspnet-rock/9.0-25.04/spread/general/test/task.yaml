@@ -4,8 +4,10 @@ execute: |
   case "$(uname -m)" in
     x86_64) rid="linux-x64" ;;
     aarch64) rid="linux-arm64" ;;
-    s390x) rid="linux-s390x" ;;
-    ppc64le) rid="linux-ppc64le" ;;
+    # .NET currently does not have Microsoft.NETCore.App.Host-linux-ppc64le or -linux-s390x packages
+    # on nuget.org
+    s390x) exit 0 ;;
+    ppc64le) exit 0 ;;
     *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
   esac
   # sudo apt update

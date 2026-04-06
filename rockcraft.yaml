@@ -1,0 +1,46 @@
+name: dotnet-aspnet
+build-base: devel
+base: bare
+version: '10.0'
+summary: ASP .NET 10 rock.
+description: |
+  Chiselled Ubuntu runtime image for ASP.NET apps.
+platforms:
+  amd64:
+  arm64:
+  ppc64el:
+  s390x:
+
+environment:
+  APP_UID: 584792
+  ASPNETCORE_URLS: 'http://+:8080'
+  DOTNET_RUNNING_IN_CONTAINER: 'true'
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 'true'
+
+run-user: _daemon_
+
+services:
+  aspnet:
+    override: replace
+    startup: enabled
+    command: "/usr/bin/dotnet [ --info ]"
+    on-success: shutdown
+    on-failure: shutdown
+
+parts:
+  aspnet:
+    plugin: nil
+    stage-packages:
+      - base-files_base
+      - base-files_chisel
+      - base-files_release-info
+      - ca-certificates_data
+      - aspnetcore-runtime-10.0_core
+
+  deb-security-manifest:
+    after: [aspnet]
+    plugin: make
+    source: https://github.com/canonical/rocks-security-manifest
+    source-type: git
+    source-branch: main
+    override-prime: gen_manifest

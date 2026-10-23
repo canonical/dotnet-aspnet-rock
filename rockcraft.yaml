@@ -1,8 +1,8 @@
 name: dotnet-aspnet
-build-base: ubuntu@24.04
+build-base: devel
 base: bare
-version: '9.0'
-summary: ASP .NET 9 rock.
+version: '10.0'
+summary: ASP .NET 10 rock.
 description: |
   Chiselled Ubuntu runtime image for ASP.NET apps.
 platforms:
@@ -30,16 +30,12 @@ services:
 parts:
   aspnet:
     plugin: nil
-    override-build: |
-      chisel cut --release ubuntu-25.04 \
-        --root ${CRAFT_PART_INSTALL} \
-        base-files_base \
-        base-files_release-info \
-        base-files_chisel \
-        ca-certificates_data \
-        aspnetcore-runtime-9.0_libs
-      mv ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet9 ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet \
-      && ln -s ../lib/dotnet/dotnet ${CRAFT_PART_INSTALL}/usr/bin/dotnet
+    stage-packages:
+      - base-files_base
+      - base-files_chisel
+      - base-files_release-info
+      - ca-certificates_data
+      - aspnetcore-runtime-10.0_core
 
   deb-security-manifest:
     after: [aspnet]

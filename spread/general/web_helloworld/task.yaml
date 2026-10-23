@@ -6,7 +6,7 @@ execute: |
   cd src
   dotnet publish --no-self-contained
 
-  docker run -d -p 8000:8080 --name web_helloworld -v $(pwd):/app:ro my-rock-name exec /usr/bin/dotnet "/app/bin/Release/net10.0/Hello.dll"
+  docker run -d -p 8000:8080 --name web_helloworld -v $(pwd):/app:ro dotnet-aspnet:10.0-26.04 exec /usr/bin/dotnet "/app/bin/Release/net10.0/Hello.dll"
 
   # Allow time for web app to start
   timeout 30 bash -c 'until curl -sSf http://127.0.0.1:8000 >/dev/null; do sleep 1; done'

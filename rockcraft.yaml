@@ -1,5 +1,6 @@
 name: dotnet-aspnet
-build-base: ubuntu@26.10
+# TODO: Update once 26.10 is stabilized
+build-base: devel
 base: bare
 version: '10.0'
 summary: ASP .NET 10 rock.
@@ -30,12 +31,24 @@ services:
 parts:
   aspnet:
     plugin: nil
-    stage-packages:
-      - base-files_base
-      - base-files_chisel
-      - base-files_release-info
-      - ca-certificates_data
-      - aspnetcore-runtime-10.0_core
+
+    # TODO: Uncomment once 26.10 is stabilized
+    # stage-packages:
+    #   - base-files_base
+    #   - base-files_chisel
+    #   - base-files_release-info
+    #   - ca-certificates_data
+    #   - aspnetcore-runtime-10.0_core
+
+    # TODO: Remove once 26.10 is stabilized
+    override-build: |
+      craftctl default
+      chisel cut --release ubuntu-26.10 --root ${CRAFT_PART_INSTALL} \
+        base-files_base \
+        base-files_release-info \
+        ca-certificates_data \
+        aspnetcore-runtime-10.0_core
+
 
   deb-security-manifest:
     after: [aspnet]
